@@ -29,7 +29,9 @@ Copy đoạn mã dưới đây và dán vào nơi bạn muốn hiển thị widg
   frameborder="0" 
   scrolling="no"
   style="border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.1);">
-</iframe>```
+</iframe>
+```
+
 ### 2. Nhúng vào Notion / Obsidian
 
 Để widget hiển thị đẹp nhất trên các công cụ ghi chú này, hãy làm theo các bước sau:
