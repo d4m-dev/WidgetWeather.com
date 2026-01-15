@@ -2,440 +2,580 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Weather Widget Fixed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Widget Pro</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f5f7fa; font-family: 'Segoe UI', sans-serif; }
-  
-  .weather-widget { display: flex; background: #fff; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); max-width: 800px; width: 100%; gap: 30px; position: relative; overflow: hidden; }
-  .weather-widget::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #667eea, #764ba2); }
-  
-  .left-section { flex: 1.2; } /* Tăng nhẹ độ rộng phần trái */
-  .right-section { flex: 1; border-left: 2px solid #f0f0f0; padding-left: 30px; display: flex; flex-direction: column; }
-  
-  .location-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-  .city-info h2 { font-size: 24px; color: #333; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-  .city-info p { color: #666; font-size: 14px; }
-  
-  .action-btns { display: flex; gap: 10px; }
-  .btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: #667eea; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-  .btn:hover { background: #5a67d8; transform: scale(1.1); }
-  .btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-  
-  .weather-main { text-align: center; margin: 20px 0; }
-  .temp { font-size: 56px; font-weight: bold; color: #333; margin-bottom: 10px; }
-  .desc { font-size: 18px; color: #666; text-transform: capitalize; }
-  .weather-icon { font-size: 60px; color: #667eea; margin-bottom: 15px; animation: float 3s ease-in-out infinite; }
-  
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-  
-  .details-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 25px; }
-  .detail-item { background: #f8f9fa; padding: 15px; border-radius: 15px; display: flex; align-items: center; gap: 12px; }
-  .detail-icon { color: #667eea; font-size: 22px; width: 25px; text-align: center; }
-  .detail-text h4 { font-size: 12px; color: #666; margin-bottom: 4px; }
-  .detail-text p { font-size: 16px; font-weight: 600; color: #333; }
-  
-  .forecast-section { flex: 1; display: flex; flex-direction: column; }
-  .forecast-section h3 { font-size: 18px; color: #333; margin-bottom: 20px; }
-  .forecast-days { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  
-  /* Chuyển forecast sang dạng list dọc để đẹp hơn bên phải */
-  .forecast-day { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: #f8f9fa; border-radius: 12px; }
-  .forecast-day p { color: #666; font-size: 14px; margin: 0; min-width: 60px; }
-  .forecast-icon { font-size: 20px; color: #667eea; margin: 0 15px; }
-  .forecast-temp { font-size: 16px !important; font-weight: 600; color: #333; }
-  
-  .loading, .error { text-align: center; padding: 40px; width: 100%; }
-  .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #667eea; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px; }
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  
-  .notification {
-    background-color: #fff3cd; color: #856404; padding: 10px;
-    border-radius: 8px; font-size: 12px; margin-top: 10px; text-align: center;
-    border: 1px solid #ffeeba; display: none;
-  }
-  
-  @media (max-width: 768px) {
-    .weather-widget { flex-direction: column; padding: 20px; margin: 10px; height: auto; overflow-y: auto; }
-    .right-section { border-left: none; border-top: 2px solid #f0f0f0; padding-left: 0; padding-top: 30px; }
-    .city-info h2 { max-width: 100%; }
-  }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #eef2f5;
+        color: #333;
+    }
+
+    /* Container chính */
+    .music-widget {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 380px;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .music-widget::before {
+        content: '';
+        position: absolute;
+        top: -50%; left: -50%; width: 200%; height: 200%;
+        background: radial-gradient(circle, rgba(255,107,107,0.1) 0%, rgba(255,255,255,0) 70%);
+        z-index: 0; pointer-events: none;
+    }
+
+    .song-info { position: relative; z-index: 1; margin-bottom: 20px; }
+    .song-title { font-size: 18px; font-weight: 600; color: #2d3436; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .song-artist { font-size: 13px; color: #636e72; }
+
+    /* Đĩa nhạc */
+    .img-container {
+        position: relative;
+        width: 180px; height: 180px;
+        margin: 0 auto 25px;
+        z-index: 1;
+    }
+    .img-container img {
+        width: 100%; height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        border: 5px solid #fff;
+        animation: rotate 20s linear infinite;
+        animation-play-state: paused;
+    }
+    .music-widget.play .img-container img { animation-play-state: running; }
+    .img-container::after {
+        content: ''; position: absolute; top: 50%; left: 50%;
+        width: 25px; height: 25px;
+        background: #fff; border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* --- Extra Controls Row (Lyric - Switch - Playlist) --- */
+    .extra-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 5;
+        padding: 0 5px;
+        width: 100%;
+    }
+
+    .control-btn-small {
+        background: none; border: none;
+        color: #b2bec3; font-size: 18px;
+        cursor: pointer; transition: color 0.3s;
+        width: 40px; height: 40px;
+        display: flex; align-items: center; justify-content: center;
+        border-radius: 50%;
+    }
+    .control-btn-small:hover, .control-btn-small.active {
+        color: #ff7675;
+        background: #fff0f0;
+    }
+
+    /* Toggle Switch Style */
+    .switch-container {
+        display: flex; flex-direction: column; align-items: center; gap: 5px;
+    }
+    .switch-label { font-size: 10px; color: #b2bec3; font-weight: 600; text-transform: uppercase; }
+    
+    .switch {
+        position: relative; display: inline-block; width: 44px; height: 24px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+        position: absolute; cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #dfe6e9;
+        transition: .4s; border-radius: 24px;
+    }
+    .slider:before {
+        position: absolute; content: "";
+        height: 18px; width: 18px;
+        left: 3px; bottom: 3px;
+        background-color: white;
+        transition: .4s; border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    input:checked + .slider { background-color: #6c5ce7; }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* --- Progress Bar --- */
+    .progress-container {
+        background: #dfe6e9; border-radius: 5px; cursor: pointer;
+        margin: 10px 0 25px; height: 6px; width: 100%; position: relative; z-index: 1;
+    }
+    .progress {
+        background: linear-gradient(90deg, #ff7675, #d63031);
+        border-radius: 5px; height: 100%; width: 0%; transition: width 0.1s linear;
+        position: relative;
+    }
+    .progress::after {
+        content: ''; position: absolute; right: -5px; top: -3px;
+        width: 12px; height: 12px; background: #d63031;
+        border-radius: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        opacity: 0; transition: opacity 0.2s;
+    }
+    .progress-container:hover .progress::after { opacity: 1; }
+    .time-stamps { display: flex; justify-content: space-between; font-size: 11px; color: #b2bec3; margin-top: 5px; }
+
+    /* Navigation Buttons */
+    .navigation {
+        display: flex; align-items: center; justify-content: center;
+        z-index: 1; position: relative; gap: 20px;
+    }
+    .action-btn { background: none; border: none; color: #dfe6e9; font-size: 20px; cursor: pointer; transition: all 0.3s ease; }
+    .action-btn:hover { color: #636e72; }
+    .action-btn-big {
+        background: linear-gradient(135deg, #ff7675, #d63031);
+        color: #fff; font-size: 24px; width: 55px; height: 55px;
+        border-radius: 50%; box-shadow: 0 10px 20px rgba(214, 48, 49, 0.3);
+        display: flex; align-items: center; justify-content: center;
+        transition: transform 0.2s;
+    }
+    .action-btn-big:hover { transform: scale(1.1); box-shadow: 0 15px 25px rgba(214, 48, 49, 0.4); color: #fff; }
+
+    /* --- Overlay Containers --- */
+    .overlay-container {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255,255,255,0.98);
+        z-index: 10;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex; flex-direction: column; padding: 20px;
+    }
+    .overlay-container.show { transform: translateY(0); }
+    
+    .overlay-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: 600; color: #2d3436; border-bottom: 1px solid #f1f2f6; padding-bottom: 10px;}
+    .close-overlay { background: none; border: none; font-size: 20px; cursor: pointer; color: #636e72; }
+
+    /* Playlist Items */
+    .playlist-items { overflow-y: auto; flex: 1; }
+    .playlist-item {
+        display: flex; align-items: center; padding: 8px;
+        border-radius: 10px; margin-bottom: 5px; cursor: pointer;
+        transition: background 0.2s;
+    }
+    .playlist-item:hover { background: #f1f2f6; }
+    .playlist-item.active { background: #ffeaa7; }
+    .playlist-item.active .item-title { color: #d63031; font-weight: 600; }
+    .item-img { width: 35px; height: 35px; border-radius: 6px; margin-right: 10px; object-fit: cover; }
+    .item-info { text-align: left; overflow: hidden; }
+    .item-title { font-size: 13px; color: #2d3436; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-artist { font-size: 10px; color: #b2bec3; }
+
+    /* Lyric View Styles */
+    .lyrics-content {
+        flex: 1; overflow-y: auto; text-align: center;
+        padding: 10px 0; scroll-behavior: smooth;
+        mask-image: linear-gradient(transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(transparent, black 10%, black 90%, transparent);
+    }
+    .lyric-line {
+        padding: 8px 0; font-size: 14px; color: #b2bec3;
+        transition: all 0.3s ease; cursor: default;
+    }
+    .lyric-line.active {
+        color: #d63031; font-weight: 600; font-size: 16px; transform: scale(1.05);
+    }
+    .no-lyric { margin-top: 50%; transform: translateY(-50%); color: #b2bec3; font-style: italic;}
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #dfe6e9; border-radius: 4px; }
 </style>
 </head>
 <body>
 
-<div class="weather-widget">
-  <div class="left-section">
-    <div class="location-header">
-      <div class="city-info">
-        <h2 id="city-name">--</h2>
-        <p id="current-date">--</p>
-      </div>
-      <div class="action-btns">
-        <button class="btn" id="refresh-btn" title="Cập nhật"><i class="fas fa-sync-alt"></i></button>
-        <button class="btn" id="location-btn" title="Vị trí của tôi"><i class="fas fa-location-arrow"></i></button>
-      </div>
-    </div>
+<div class="music-widget" id="music-widget">
     
-    <div class="weather-main">
-      <div class="weather-icon" id="weather-icon"><i class="fas fa-cloud"></i></div>
-      <div class="temp" id="temperature">--°C</div>
-      <div class="desc" id="description">--</div>
-    </div>
-    
-    <div class="details-grid">
-      <div class="detail-item">
-        <div class="detail-icon"><i class="fas fa-temperature-high"></i></div>
-        <div class="detail-text">
-          <h4>Cảm giác như</h4>
-          <p id="feels-like">--°C</p>
+    <div class="extra-controls">
+        <button class="control-btn-small" id="lyric-btn" title="Lời bài hát"><i class="fas fa-file-alt"></i></button>
+        <div class="switch-container">
+            <label class="switch">
+                <input type="checkbox" id="instrumental-toggle">
+                <span class="slider"></span>
+            </label>
+            <span class="switch-label" id="mode-label">Vocal</span>
         </div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-icon"><i class="fas fa-tint"></i></div>
-        <div class="detail-text">
-          <h4>Độ ẩm</h4>
-          <p id="humidity">--%</p>
+        <button class="control-btn-small" id="playlist-btn" title="Danh sách phát"><i class="fas fa-list"></i></button>
+    </div>
+
+    <div class="song-info">
+        <h2 class="song-title" id="title">Đang tải danh sách...</h2>
+        <h3 class="song-artist" id="artist">Vui lòng đợi</h3>
+    </div>
+
+    <div class="img-container">
+        <img src="https://via.placeholder.com/200" alt="music-cover" id="cover">
+    </div>
+
+    <audio id="audio" crossorigin="anonymous"></audio>
+
+    <div class="progress-container" id="progress-container">
+        <div class="progress" id="progress"></div>
+    </div>
+    <div class="time-stamps">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+    </div>
+
+    <div class="navigation">
+        <button id="prev" class="action-btn"><i class="fas fa-backward"></i></button>
+        <button id="play" class="action-btn action-btn-big"><i class="fas fa-play"></i></button>
+        <button id="next" class="action-btn"><i class="fas fa-forward"></i></button>
+    </div>
+
+    <div class="overlay-container" id="playlist-overlay">
+        <div class="overlay-header">
+            <span>Danh sách phát</span>
+            <button class="close-overlay" id="close-playlist"><i class="fas fa-times"></i></button>
         </div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-icon"><i class="fas fa-wind"></i></div>
-        <div class="detail-text">
-          <h4>Gió</h4>
-          <p id="wind-speed">-- km/h</p>
+        <div class="playlist-items" id="playlist-list"></div>
+    </div>
+
+    <div class="overlay-container" id="lyrics-overlay">
+        <div class="overlay-header">
+            <span>Lời bài hát</span>
+            <button class="close-overlay" id="close-lyrics"><i class="fas fa-times"></i></button>
         </div>
-      </div>
-      <div class="detail-item">
-        <div class="detail-icon"><i class="fas fa-compress-alt"></i></div>
-        <div class="detail-text">
-          <h4>Áp suất</h4>
-          <p id="pressure">-- hPa</p>
+        <div class="lyrics-content" id="lyrics-content">
+            <p class="no-lyric">Đang tải lời bài hát...</p>
         </div>
-      </div>
     </div>
-  </div>
-  
-  <div class="right-section">
-    <div class="forecast-section" id="forecast-content">
-      <h3><i class="fas fa-calendar-alt"></i> Dự báo 5 ngày</h3>
-      <div class="forecast-days" id="forecast-days">
-        <!-- Forecast items will go here -->
-      </div>
-      <div class="notification" id="sample-data-notify">
-        <i class="fas fa-info-circle"></i> Đang hiển thị dữ liệu mẫu (API Key hết hạn hoặc lỗi kết nối).
-      </div>
-    </div>
-    
-    <div class="loading" id="loading" style="display: none;">
-      <div class="spinner"></div>
-      <p>Đang tải dữ liệu...</p>
-    </div>
-    
-    <div class="error" id="error" style="display:none">
-      <i class="fas fa-exclamation-triangle" style="font-size:40px;color:#e74c3c;margin-bottom:15px"></i>
-      <h3>Không thể tải dữ liệu</h3>
-      <p id="error-message">Vui lòng thử lại</p>
-      <button class="btn" onclick="retryWeather()" style="margin: 15px auto 0;"><i class="fas fa-redo"></i></button>
-    </div>
-  </div>
 </div>
 
+<!-- LƯU Ý: Phải đặt file tracks.js cùng thư mục và XÓA dòng 'export default tracks' trong file tracks.js -->
+<script src="tracks.js"></script>
+
 <script>
-// API Key mẫu (Lưu ý: Key miễn phí thường có giới hạn hoặc có thể hết hạn)
-// Nếu key này chết, code sẽ tự động chuyển sang dữ liệu mẫu (useSampleData)
-const API_KEY = '617c4ee55ebc9a4b8dac0a1a1b8aa49f'; 
-const BASE_URL = 'https://api.openweathermap.org/data/2.5';
-
-const weatherIcons = {
-    '01d': 'fas fa-sun', '01n': 'fas fa-moon',
-    '02d': 'fas fa-cloud-sun', '02n': 'fas fa-cloud-moon',
-    '03d': 'fas fa-cloud', '03n': 'fas fa-cloud',
-    '04d': 'fas fa-cloud', '04n': 'fas fa-cloud',
-    '09d': 'fas fa-cloud-rain', '09n': 'fas fa-cloud-rain',
-    '10d': 'fas fa-cloud-sun-rain', '10n': 'fas fa-cloud-moon-rain',
-    '11d': 'fas fa-bolt', '11n': 'fas fa-bolt',
-    '13d': 'fas fa-snowflake', '13n': 'fas fa-snowflake',
-    '50d': 'fas fa-smog', '50n': 'fas fa-smog'
-};
-
-let currentCity = 'Ho Chi Minh City';
-let currentPos = null;
-let useGeo = false;
-
-function updateTime() {
-    const now = new Date();
-    document.getElementById('current-date').textContent = now.toLocaleDateString('vi-VN', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
-}
-
-function showLoading() {
-    document.getElementById('loading').style.display = 'block';
-    document.getElementById('forecast-content').style.display = 'none';
-    document.getElementById('error').style.display = 'none';
-    const btns = document.querySelectorAll('.btn');
-    btns.forEach(btn => btn.disabled = true);
-}
-
-function hideLoading() {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('forecast-content').style.display = 'flex';
-    const btns = document.querySelectorAll('.btn');
-    btns.forEach(btn => btn.disabled = false);
-}
-
-function showSampleDataNotification(show) {
-    const el = document.getElementById('sample-data-notify');
-    el.style.display = show ? 'block' : 'none';
-}
-
-async function fetchWeather(city) {
-    let weatherData = null;
-    // Danh sách tên thành phố để thử (fallback nếu tên tiếng Việt lỗi)
-    const cityNames = [city, 'Saigon', 'Ho Chi Minh City'];
-
-    for (const cityName of cityNames) {
-        try {
-            const response = await fetch(
-                `${BASE_URL}/weather?q=${encodeURIComponent(cityName)}&appid=${API_KEY}&units=metric&lang=vi`
-            );
-            if (response.ok) {
-                weatherData = await response.json();
-                currentCity = cityName; // Update current city if found
-                break;
-            }
-        } catch (e) {
-            console.warn(`Failed to fetch for ${cityName}`);
-        }
+    // Kiểm tra xem tracks có tồn tại không (do load từ file tracks.js)
+    if (typeof tracks === 'undefined') {
+        document.getElementById('title').innerText = "Lỗi tải file";
+        document.getElementById('artist').innerText = "Kiểm tra file tracks.js";
+        alert("Lỗi: Không tìm thấy biến 'tracks'.\n\nHãy mở file 'tracks.js' và XÓA dòng 'export default tracks;' ở cuối file đi nhé!");
     }
 
-    if (!weatherData) throw new Error('Không tìm thấy thành phố');
+    const musicWidget = document.getElementById('music-widget');
+    const playBtn = document.getElementById('play');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const audio = document.getElementById('audio');
+    const progress = document.getElementById('progress');
+    const progressContainer = document.getElementById('progress-container');
+    const title = document.getElementById('title');
+    const artist = document.getElementById('artist');
+    const cover = document.getElementById('cover');
+    const currTime = document.getElementById('current-time');
+    const durTime = document.getElementById('duration');
 
-    const forecastResponse = await fetch(
-        `${BASE_URL}/forecast?q=${encodeURIComponent(currentCity)}&appid=${API_KEY}&units=metric&lang=vi`
-    );
+    const lyricBtn = document.getElementById('lyric-btn');
+    const playlistBtn = document.getElementById('playlist-btn');
+    const instrumentalToggle = document.getElementById('instrumental-toggle');
+    const modeLabel = document.getElementById('mode-label');
     
-    if (!forecastResponse.ok) throw new Error('Lỗi lấy dữ liệu dự báo');
+    const playlistOverlay = document.getElementById('playlist-overlay');
+    const closePlaylist = document.getElementById('close-playlist');
+    const playlistList = document.getElementById('playlist-list');
     
-    const forecastData = await forecastResponse.json();
+    const lyricsOverlay = document.getElementById('lyrics-overlay');
+    const closeLyrics = document.getElementById('close-lyrics');
+    const lyricsContent = document.getElementById('lyrics-content');
 
-    return {
-        current: weatherData,
-        forecast: forecastData
-    };
-}
+    let songIndex = 0;
+    let lyricsData = [];
 
-async function fetchWeatherByCoords(lat, lon) {
-    const response = await fetch(
-        `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=vi`
-    );
-    if (!response.ok) throw new Error('Lỗi API Weather');
-    const weatherData = await response.json();
-
-    const forecastResponse = await fetch(
-        `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=vi`
-    );
-    if (!forecastResponse.ok) throw new Error('Lỗi API Forecast');
-    const forecastData = await forecastResponse.json();
-
-    return {
-        current: weatherData,
-        forecast: forecastData
-    };
-}
-
-function displayWeather(data) {
-    const { current, forecast } = data; // FIX: Lấy đối tượng forecast từ data
-
-    // Cập nhật thông tin hiện tại
-    document.getElementById('city-name').textContent = current.name + (current.sys.country ? ', ' + current.sys.country : '');
-    document.getElementById('temperature').textContent = Math.round(current.main.temp) + '°C';
-    document.getElementById('description').textContent = current.weather[0].description;
-    
-    // Icon
-    const iconCode = current.weather[0].icon;
-    const iconClass = weatherIcons[iconCode] || 'fas fa-cloud';
-    document.getElementById('weather-icon').innerHTML = `<i class="${iconClass}"></i>`;
-
-    // Chi tiết
-    document.getElementById('feels-like').textContent = Math.round(current.main.feels_like) + '°C';
-    document.getElementById('humidity').textContent = current.main.humidity + '%';
-    document.getElementById('wind-speed').textContent = Math.round(current.wind.speed * 3.6) + ' km/h'; // m/s to km/h
-    document.getElementById('pressure').textContent = current.main.pressure + ' hPa';
-
-    // Dự báo 5 ngày
-    const forecastContainer = document.getElementById('forecast-days');
-    forecastContainer.innerHTML = '';
-
-    const dailyForecasts = [];
-    const seenDays = new Set();
-    const today = new Date().getDate();
-
-    // FIX LOGIC: Sử dụng forecast.list thay vì forecastData.list
-    // Đổi tên biến lặp thành 'item' để tránh trùng với biến 'forecast' ở trên
-    if (forecast && forecast.list) {
-        for (const item of forecast.list) {
-            const date = new Date(item.dt * 1000);
-            const day = date.getDate();
-
-            // Lấy dự báo 12:00 trưa hoặc mục đầu tiên của ngày mới
-            if (day !== today && !seenDays.has(day) && dailyForecasts.length < 5) {
-                // Ưu tiên lấy lúc giữa trưa để chính xác hơn, hoặc nếu chưa có thì lấy cái đầu tiên tìm thấy
-                if (date.getHours() >= 11 || !seenDays.has(day)) {
-                    dailyForecasts.push(item);
-                    seenDays.add(day);
-                }
-            }
+    // Hàm chuyển đổi link Github redirect sang direct link để tránh lỗi Audio
+    function fixGithubUrl(url) {
+        if (!url) return '';
+        if (url.includes('github.com') && url.includes('/raw/')) {
+            return url.replace('github.com', 'raw.githubusercontent.com').replace('/raw/', '/');
         }
+        return url;
     }
 
-    dailyForecasts.forEach(item => {
-        const date = new Date(item.dt * 1000);
-        const dayName = date.toLocaleDateString('vi-VN', { weekday: 'short' });
-        const iconCode = item.weather[0].icon;
-        const iconClass = weatherIcons[iconCode] || 'fas fa-cloud';
-        const temp = Math.round(item.main.temp);
-        const description = item.weather[0].description;
+    function loadSong(song) {
+        title.innerText = song.name;
+        artist.innerText = song.artist;
+        cover.src = song.artwork;
 
-        const dayElement = document.createElement('div');
-        dayElement.className = 'forecast-day';
-        dayElement.innerHTML = `
-            <div style="display:flex; align-items:center;">
-                <p style="font-weight:bold; width: 50px;">${dayName}</p>
-                <div class="forecast-icon" style="margin: 0 10px;"><i class="${iconClass}"></i></div>
-            </div>
-            <p style="font-size: 12px; color: #999; flex:1; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-right:5px;">${description}</p>
-            <p class="forecast-temp">${temp}°C</p>
-        `;
-        forecastContainer.appendChild(dayElement);
-    });
-}
+        const isInstrumental = instrumentalToggle.checked;
+        let audioSrc = "";
 
-function useSampleData() {
-    showSampleDataNotification(true);
-    const now = Date.now() / 1000;
-    const sampleData = {
-        current: {
-            name: "Hồ Chí Minh (Mẫu)",
-            sys: { country: "VN" },
-            main: {
-                temp: 32,
-                feels_like: 35,
-                humidity: 75,
-                pressure: 1010
-            },
-            weather: [{
-                description: "mây thưa",
-                icon: "02d"
-            }],
-            wind: { speed: 2.5 } // m/s
-        },
-        forecast: {
-            list: [
-                { dt: now + 86400, main: { temp: 33 }, weather: [{ icon: "01d", description: "nắng đẹp" }] },
-                { dt: now + 172800, main: { temp: 31 }, weather: [{ icon: "09d", description: "mưa rào" }] },
-                { dt: now + 259200, main: { temp: 30 }, weather: [{ icon: "11d", description: "có dông" }] },
-                { dt: now + 345600, main: { temp: 32 }, weather: [{ icon: "02d", description: "ít mây" }] },
-                { dt: now + 432000, main: { temp: 33 }, weather: [{ icon: "01d", description: "quang mây" }] }
-            ]
-        }
-    };
-    displayWeather(sampleData);
-}
-
-async function updateWeather() {
-    showLoading();
-    showSampleDataNotification(false);
-    
-    try {
-        let data;
-        if (useGeo && currentPos) {
-            data = await fetchWeatherByCoords(currentPos.latitude, currentPos.longitude);
+        if (isInstrumental && song.instrumental) {
+            audioSrc = fixGithubUrl(song.instrumental);
+            modeLabel.innerText = "Beat";
+            modeLabel.style.color = "#6c5ce7";
         } else {
-            data = await fetchWeather(currentCity);
+            audioSrc = fixGithubUrl(song.path);
+            modeLabel.innerText = "Vocal";
+            modeLabel.style.color = "#b2bec3";
         }
-        displayWeather(data);
-    } catch (error) {
-        console.error('Lỗi khi lấy dữ liệu thật:', error);
-        useSampleData(); // Fallback to sample data
-    } finally {
-        hideLoading();
+
+        // Kiểm tra nếu link rỗng hoặc lỗi
+        if (!audioSrc || audioSrc.includes('..4.mp4')) {
+             console.warn("Link bài hát không hợp lệ:", audioSrc);
+        }
+
+        audio.src = audioSrc;
+        updatePlaylistActive();
+        loadLyrics(fixGithubUrl(song.lyric));
     }
-}
 
-function retryWeather() {
-    document.getElementById('error').style.display = 'none';
-    updateWeather();
-}
-
-function getUserLocation() {
-    return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) {
-            reject(new Error('Trình duyệt không hỗ trợ geolocation'));
+    async function loadLyrics(lyricUrl) {
+        lyricsContent.innerHTML = '<p class="no-lyric">Đang tải...</p>';
+        lyricsData = [];
+        
+        if (!lyricUrl) {
+            lyricsContent.innerHTML = '<p class="no-lyric">Không có lời bài hát</p>';
             return;
         }
 
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                currentPos = position.coords;
-                useGeo = true;
-                resolve(position.coords);
-            },
-            error => {
-                console.warn('Không lấy được vị trí:', error.message);
-                reject(error);
-            },
-            { timeout: 10000 } // Add timeout
-        );
-    });
-}
-
-async function initWidget() {
-    updateTime();
-    setInterval(updateTime, 60000);
-
-    document.getElementById('refresh-btn').addEventListener('click', () => {
-        // Reset geo flag if user manually refreshes without location button
-        // useGeo = false; 
-        updateWeather();
-    });
-
-    document.getElementById('location-btn').addEventListener('click', async () => {
-        showLoading();
         try {
-            await getUserLocation();
-            updateWeather();
+            const response = await fetch(lyricUrl);
+            if (response.ok) {
+                const text = await response.text();
+                parseLyrics(text);
+            } else {
+                lyricsContent.innerHTML = '<p class="no-lyric">Lỗi tải lời bài hát</p>';
+            }
         } catch (error) {
-            // Nếu lỗi vị trí, quay lại mặc định
-            useGeo = false;
-            updateWeather();
+            console.error("Lỗi fetch lyric:", error);
+            lyricsContent.innerHTML = '<p class="no-lyric">Không thể tải lời</p>';
         }
+    }
+
+    function parseLyrics(lrcText) {
+        const lines = lrcText.split('\n');
+        const regex = /^\[(\d{2}):(\d{2}(?:\.\d+)?)\](.*)/;
+        
+        lyricsData = [];
+        let html = '';
+
+        lines.forEach(line => {
+            const match = line.match(regex);
+            if (match) {
+                const minutes = parseFloat(match[1]);
+                const seconds = parseFloat(match[2]);
+                const text = match[3].trim();
+                const time = minutes * 60 + seconds;
+                
+                if (text) {
+                    lyricsData.push({ time, text });
+                    html += `<div class="lyric-line" data-time="${time}">${text}</div>`;
+                }
+            }
+        });
+
+        if (lyricsData.length > 0) {
+            lyricsContent.innerHTML = html;
+        } else {
+            lyricsContent.innerHTML = '<p class="no-lyric">Lời bài hát trống</p>';
+        }
+    }
+
+    // --- PLAYBACK CONTROLS ---
+
+    function playSong() {
+        musicWidget.classList.add('play');
+        playBtn.querySelector('i').classList.remove('fa-play');
+        playBtn.querySelector('i').classList.add('fa-pause');
+        
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Playback prevented:", error);
+                // Có thể do trình duyệt chặn autoplay hoặc link lỗi
+            });
+        }
+    }
+
+    function pauseSong() {
+        musicWidget.classList.remove('play');
+        playBtn.querySelector('i').classList.add('fa-play');
+        playBtn.querySelector('i').classList.remove('fa-pause');
+        audio.pause();
+    }
+
+    function togglePlay() {
+        if (musicWidget.classList.contains('play')) {
+            pauseSong();
+        } else {
+            playSong();
+        }
+    }
+
+    function prevSong() {
+        songIndex--;
+        if (songIndex < 0) songIndex = tracks.length - 1;
+        loadSong(tracks[songIndex]);
+        playSong();
+    }
+
+    function nextSong() {
+        songIndex++;
+        if (songIndex > tracks.length - 1) songIndex = 0;
+        loadSong(tracks[songIndex]);
+        playSong();
+    }
+
+    instrumentalToggle.addEventListener('change', () => {
+        const isPlaying = !audio.paused;
+        const currentTime = audio.currentTime;
+        const song = tracks[songIndex];
+
+        if (instrumentalToggle.checked) {
+            if(song.instrumental) {
+                audio.src = fixGithubUrl(song.instrumental);
+                modeLabel.innerText = "Beat";
+                modeLabel.style.color = "#6c5ce7";
+            } else {
+                alert("Bài này chưa có Beat!");
+                instrumentalToggle.checked = false;
+                return;
+            }
+        } else {
+            audio.src = fixGithubUrl(song.path);
+            modeLabel.innerText = "Vocal";
+            modeLabel.style.color = "#b2bec3";
+        }
+
+        audio.currentTime = currentTime;
+        if (isPlaying) audio.play();
     });
 
-    // Initial load
-    try {
-        // Thử lấy vị trí trước, nếu lâu quá hoặc fail thì dùng mặc định
-        // Logic: Gọi updateWeather ngay lập tức với mặc định, sau đó nếu có location thì update lại
-        updateWeather(); // Load default first for speed
-        
-        // Sau đó lẳng lặng thử lấy location
-        try {
-            await getUserLocation();
-            if(useGeo) updateWeather(); // Reload if location found
-        } catch(e) {
-            // Ignore silently
-        }
-    } catch (error) {
-        console.log('Init error');
-    }
-}
+    // --- UI UPDATES ---
 
-document.addEventListener('DOMContentLoaded', initWidget);
+    function updateProgress(e) {
+        const { duration, currentTime } = e.srcElement;
+        if(duration) {
+            const progressPercent = (currentTime / duration) * 100;
+            progress.style.width = `${progressPercent}%`;
+
+            const durMin = Math.floor(duration / 60);
+            let durSec = Math.floor(duration % 60);
+            if (durSec < 10) durSec = `0${durSec}`;
+            durTime.innerText = `${durMin}:${durSec}`;
+
+            const curMin = Math.floor(currentTime / 60);
+            let curSec = Math.floor(currentTime % 60);
+            if (curSec < 10) curSec = `0${curSec}`;
+            currTime.innerText = `${curMin}:${curSec}`;
+
+            syncLyrics(currentTime);
+        }
+    }
+
+    function syncLyrics(currentTime) {
+        if (lyricsData.length === 0) return;
+        let activeIndex = -1;
+        for (let i = 0; i < lyricsData.length; i++) {
+            if (currentTime >= lyricsData[i].time) activeIndex = i;
+            else break;
+        }
+
+        const lines = document.querySelectorAll('.lyric-line');
+        lines.forEach(line => line.classList.remove('active'));
+
+        if (activeIndex !== -1 && lines[activeIndex]) {
+            const activeLine = lines[activeIndex];
+            activeLine.classList.add('active');
+            if (lyricsOverlay.classList.contains('show')) {
+                activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }
+
+    function setProgress(e) {
+        const width = this.clientWidth;
+        const clickX = e.offsetX;
+        const duration = audio.duration;
+        audio.currentTime = (clickX / width) * duration;
+    }
+
+    function renderPlaylist() {
+        playlistList.innerHTML = '';
+        if(typeof tracks !== 'undefined') {
+            tracks.forEach((song, index) => {
+                const item = document.createElement('div');
+                item.classList.add('playlist-item');
+                if (index === songIndex) item.classList.add('active');
+                
+                item.innerHTML = `
+                    <img src="${song.artwork}" class="item-img">
+                    <div class="item-info">
+                        <div class="item-title">${song.name}</div>
+                        <div class="item-artist">${song.artist}</div>
+                    </div>
+                `;
+                item.addEventListener('click', () => {
+                    songIndex = index;
+                    loadSong(tracks[songIndex]);
+                    playSong();
+                    playlistOverlay.classList.remove('show');
+                });
+                playlistList.appendChild(item);
+            });
+        }
+    }
+
+    function updatePlaylistActive() {
+        const items = document.querySelectorAll('.playlist-item');
+        items.forEach((item, index) => {
+            if (index === songIndex) item.classList.add('active');
+            else item.classList.remove('active');
+        });
+    }
+
+    playBtn.addEventListener('click', togglePlay);
+    prevBtn.addEventListener('click', prevSong);
+    nextBtn.addEventListener('click', nextSong);
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('ended', nextSong);
+    progressContainer.addEventListener('click', setProgress);
+
+    playlistBtn.addEventListener('click', () => {
+        playlistOverlay.classList.add('show');
+        renderPlaylist();
+    });
+    closePlaylist.addEventListener('click', () => playlistOverlay.classList.remove('show'));
+
+    lyricBtn.addEventListener('click', () => {
+        lyricsOverlay.classList.add('show');
+        const activeLine = document.querySelector('.lyric-line.active');
+        if(activeLine) activeLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    closeLyrics.addEventListener('click', () => lyricsOverlay.classList.remove('show'));
+
+    // Init
+    if (typeof tracks !== 'undefined' && tracks.length > 0) {
+        loadSong(tracks[songIndex]);
+        renderPlaylist();
+    }
 </script>
+
 </body>
 </html>
